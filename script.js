@@ -1,4 +1,4 @@
-let cars = [
+const cars = [
       {
         "id": 1,
         "marca": "Fiat",
@@ -201,12 +201,34 @@ let cars = [
       }
     ]
   
-    let card = document.getElementById('card')
-    let container = document.getElementById('container')
-
+  const container = document.getElementById('container')
+ 
    for (let i = 0; i < cars.length; i++) {
-    let newCard = card.cloneNode(true) //cloneNode può clonare piu nodi html
-    container.appendChild(newCard)
+    
+    const card = document.createElement('div')
+    card.classList.add('card' , 'p1', 'm-2')
+    const cardBody = document.createElement('div')
+    cardBody.classList.add('card-body')
+    const titleCard = document.createElement('h5')
+    titleCard.classList.add('card-title')
+    titleCard.innerHTML = cars[i].marca + ' ' + cars[i].modello
+    const yearCard = document.createElement('p')
+    yearCard.classList.add('card-text')
+    yearCard.innerHTML = cars[i].anno
+    const fuelCard = document.createElement('p')
+    fuelCard.innerHTML = cars[i].carburante
+    const ccCard = document.createElement('p')
+    ccCard.innerHTML = cars[i].cilindrata
+    const priceCard = document.createElement('p')
+    priceCard.innerHTML = cars[i].prezzo
+    
+    cardBody.appendChild(titleCard);
+    cardBody.appendChild(yearCard);
+    cardBody.appendChild(fuelCard);
+    cardBody.appendChild(ccCard);
+    cardBody.appendChild(priceCard);
+    card.appendChild(cardBody);
+    container.appendChild(card);
    }
 
 
