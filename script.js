@@ -200,5 +200,14 @@ let cars = [
         "cilindrata": 2000
       }
     ]
-    
-  console.log(cars)
+  
+    let card = document.getElementById('card')
+    let container = document.getElementById('container')
+
+   for (let i = 0; i < cars.length; i++) {
+    let newCard = card.cloneNode(true) //cloneNode può clonare piu nodi html
+    container.appendChild(newCard)
+   }
+
+
+   
