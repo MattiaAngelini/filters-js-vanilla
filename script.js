@@ -202,34 +202,71 @@ const cars = [
     ]
   
   const container = document.getElementById('container')
- 
-   for (let i = 0; i < cars.length; i++) {
-    
-    const card = document.createElement('div')
-    card.classList.add('card' , 'p1', 'm-2')
-    const cardBody = document.createElement('div')
-    cardBody.classList.add('card-body')
-    const titleCard = document.createElement('h5')
-    titleCard.classList.add('card-title')
-    titleCard.innerHTML = cars[i].marca + ' ' + cars[i].modello
-    const yearCard = document.createElement('p')
-    yearCard.classList.add('card-text')
-    yearCard.innerHTML = cars[i].anno
-    const fuelCard = document.createElement('p')
-    fuelCard.innerHTML = cars[i].carburante
-    const ccCard = document.createElement('p')
-    ccCard.innerHTML = cars[i].cilindrata
-    const priceCard = document.createElement('p')
-    priceCard.innerHTML = cars[i].prezzo
-    
-    cardBody.appendChild(titleCard);
-    cardBody.appendChild(yearCard);
-    cardBody.appendChild(fuelCard);
-    cardBody.appendChild(ccCard);
-    cardBody.appendChild(priceCard);
+  const button = document.getElementById('btn')
+
+// Funzione per filtrare le auto
+function filterCars() {
+  // Ottieni i valori inseriti dall'utente
+  const modelInput = document.getElementById("model").value.toLowerCase();
+  const yearInput = parseInt(document.getElementById("year").value)
+  const fuelInput = document.getElementById("fuel").value.toLowerCase();
+  const ccInput = parseInt(document.getElementById("cc").value)
+  const priceInput = parseInt(document.getElementById("price").value) 
+
+  // Filtra le auto, utilizzo filter()
+  const filteredCars = cars.filter((car) => {
+    return (
+      (modelInput === "" ||
+        car.marca.toLowerCase().includes(modelInput) ||
+        car.modello.toLowerCase().includes(modelInput)) &&
+      (isNaN(yearInput) || car.anno === yearInput) &&
+      (fuelInput === "" || car.carburante.toLowerCase() === fuelInput) &&
+      (isNaN(ccInput) || car.cilindrata === ccInput) &&
+      (isNaN(priceInput) || car.prezzo === priceInput)
+    );
+  });
+
+  printCards(filteredCars);
+}
+
+// Funzione per stampare le auto filtrate
+function printCards(arr) {
+
+  container.innerHTML = ""; //* Svuoto il contenitore prima di stampare nuove cards
+
+  arr.forEach((car) => {
+    //era meglio creare template con innerHTML***
+    const card = document.createElement("div");
+    card.classList.add("card", "p-3", "m-2",);
+    const cardBody = document.createElement("div");
+    cardBody.classList.add("card-body");
+    const title = document.createElement("h5");
+    title.classList.add("card-title");
+    title.textContent = `${car.marca} ${car.modello}`;
+    const year = document.createElement("p");
+    year.classList.add("card-text");
+    year.textContent = `Anno: ${car.anno}`;
+    const fuel = document.createElement("p");
+    fuel.classList.add("card-text");
+    fuel.textContent = `Carburante: ${car.carburante}`;
+    const cc = document.createElement("p");
+    cc.classList.add("card-text");
+    cc.textContent = `Cilindrata: ${car.cilindrata} cc`;
+    const price = document.createElement("p");
+    price.classList.add("card-text");
+    price.textContent = `Prezzo: €${car.prezzo}`;
+
+    // Append elementi alla card
+    cardBody.appendChild(title);
+    cardBody.appendChild(year);
+    cardBody.appendChild(fuel);
+    cardBody.appendChild(cc);
+    cardBody.appendChild(price);
     card.appendChild(cardBody);
     container.appendChild(card);
-   }
+  });
+}
 
+button.addEventListener("click", filterCars);
 
    
